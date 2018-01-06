@@ -20,7 +20,7 @@
 	
    
     <call>
-        <part type="constant" value="http://musicbrainz.org/ws/2/artist/?name="/>
+        <part type="constant" value="http://musicbrainz.org/ws/2/artist/?query="/>
         <part type="input" variable="?artistName" class="singer" separator="+" />
     </call>
 	
