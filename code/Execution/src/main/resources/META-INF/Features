@@ -1,0 +1,11 @@
+#
+Input: P(?title, ?year)<-getArtistInfoByName("Frank Sinatra", ?id, ?b, ?e)#getAlbumByArtistId(?id, ?aid, ?albumName)
+P is the projection symbol (rename element is not allowed)
+<- is the affectation symbol
+? is the start symbol of a variable
+, is the symbol to separate elements
+" is the start symbol of a constant
+#
+ExponentialBackOff algorithm, retries if there is a problem during the download + fibonnacci
+#
+Consitency1 raise error if there is not "<-" symbols or more than one

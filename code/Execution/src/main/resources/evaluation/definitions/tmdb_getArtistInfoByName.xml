@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ws>    
+    <!-- variables in the head: the order matters:
+    the first variables should be the input variables, followed by the output variables
+    also, for the input variables the order should match the order in the URLs of the calls
+    -->
+    <headVariables>
+        <variable type="inout" name="?artistName"/>
+        <variable type="output" name="?artistId"/>
+        <variable type="output" name="?beginDate"/>
+        <variable type="output" name="?endDate"/>
+    </headVariables>
+    
+
+    <definition>
+		
+    </definition>
+	
+   
+    <call>
+        <part type="constant" value="https://api.themoviedb.org/3/search/person?api_key=d335eef1e8e85b73cfa5f57cc3d50e4d&amp;query="/>
+        <part type="input" variable="?artistName" class="actor" separator="+" />
+    </call>
+	
+    <transformation file="mb_getArtistInfoByName_1.xsl"/>
+
+</ws>
+
