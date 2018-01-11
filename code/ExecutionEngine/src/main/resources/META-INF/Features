@@ -10,3 +10,7 @@ P is the projection symbol (rename element is not allowed)
 ExponentialBackOff algorithm, retries if there is a problem during the download + fibonnacci
 #
 Consitency1 raise error if there is not "<-" symbols or more than one
+Consitency2 raise error if there empty clausules ","
+Consitency3 raise error if the query doesn't have head 
+Consitency4 raise error if the query doesn't have body 
+consitency5 raise error if the project element doesn't appear in the body
