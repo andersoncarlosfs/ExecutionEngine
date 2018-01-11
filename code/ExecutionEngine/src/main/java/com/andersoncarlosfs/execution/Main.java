@@ -6,9 +6,11 @@ import com.andersoncarlosfs.execution.download.WebService;
 import java.util.AbstractMap;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class Main {
 
@@ -146,12 +148,11 @@ public class Main {
          *
          */
         private static boolean isQueryConsitent(Map.Entry<Expression, List<Expression>> query) {
-            return query != null;
-            /*
             // Checking if the query is empty
             if (query == null) {
                 return false;
-            }            
+            }
+            /*
             Set<String> headConstants = new HashSet<>();
             Set<String> headVariables = new HashSet<>();
             for (Element element : query.getKey().elements) {
@@ -161,17 +162,23 @@ public class Main {
                     headConstants.add(element.value);
                 }
             }
+             */
+            Set<String> bodyConstants = new HashSet<>();
+            /*
             Set<String> bodyVariables = new HashSet<>();
+             */
             for (Expression expression : query.getValue()) {
                 for (Element element : expression.elements) {
                     if (element.isVariable()) {
+                        /*
                         bodyVariables.add(element.value);
+                         */
+                    } else {
+                        bodyConstants.add(element.value);
                     }
                 }
             }
-            // Checking if the body of the query contains all head variables
-            return !bodyVariables.containsAll(headVariables) ? headConstants.isEmpty() : true;
-             */
+            return !query.getKey().elements.isEmpty() && !bodyConstants.isEmpty();
         }
 
     }

@@ -120,7 +120,14 @@ public class WebService {
      * @return the file where the call result is stored
      */
     public String getCallResult(String... inputs) {
-        String fileWithCallResult = Settings.getDirForCallResults(this.name) + Formating.getFileNameForInputs(inputs);
+        String[] args = new String[numberOfInputs];
+
+        // Computing the arguments
+        for (int i = 0; i < numberOfInputs; i++) {
+            args[i] = inputs[i];
+        }
+
+        String fileWithCallResult = Settings.getDirForCallResults(this.name) + Formating.getFileNameForInputs(args);
 
         /**
          * Looking if the result is cached
