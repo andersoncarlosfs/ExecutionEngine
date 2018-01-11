@@ -128,10 +128,12 @@ public class Main {
          *
          */
         private static boolean isQueryConsitent(Map.Entry<Expression, List<Expression>> query) {
+            return query != null;
+            /*
             // Checking if the query is empty
             if (query == null) {
                 return false;
-            }
+            }            
             Set<String> headConstants = new HashSet<>();
             Set<String> headVariables = new HashSet<>();
             for (Element element : query.getKey().elements) {
@@ -151,6 +153,7 @@ public class Main {
             }
             // Checking if the body of the query contains all head variables
             return !bodyVariables.containsAll(headVariables) ? headConstants.isEmpty() : true;
+             */
         }
 
     }
