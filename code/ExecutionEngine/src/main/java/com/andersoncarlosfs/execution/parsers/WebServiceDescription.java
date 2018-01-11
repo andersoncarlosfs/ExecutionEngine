@@ -67,7 +67,7 @@ public class WebServiceDescription {
             }
 
             /**
-             * parse variables in the head: order matters!
+             * Parsing variables in the head paying attention to the order
              */
             System.out.println("The variables are:");
 
@@ -86,7 +86,7 @@ public class WebServiceDescription {
                 String expr_type = "./@type";
                 String type = ((Node) xPath.compile(expr_type).evaluate(nodeList.item(i), XPathConstants.NODE)).getNodeValue();
                 if (type.trim().startsWith("in")) {
-                    numberInputs = i;
+                    numberInputs = i + 1;
                 }
 
                 /**
