@@ -6,11 +6,9 @@ import com.andersoncarlosfs.execution.download.WebService;
 import java.util.AbstractMap;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 public class Main {
 
@@ -36,6 +34,26 @@ public class Main {
         public Expression(String function, Collection<Element> elements) {
             this.function = function;
             this.elements = elements;
+        }
+
+        /**
+         *
+         */
+        public Collection<String> getElementsAsListOfString() {
+            List<String> list = new LinkedList<>();
+            for (Element element : elements) {
+                list.add(element.value);
+            }
+            return list;
+        }
+
+        /**
+         *
+         */
+        public String[] getElementsAsArrayOfString() {
+            Collection<String> collection = getElementsAsListOfString();
+            String[] array = new String[collection.size()];
+            return collection.toArray(array);
         }
 
         /**
@@ -93,7 +111,7 @@ public class Main {
             // Spliting the expressions
             String[] arrayOfStringExpressions = stringExpression.split("#");
             List<Expression> listOfObjectExpressions = new LinkedList<>();
-            for (int i = 1; i < arrayOfStringExpressions.length; i++) {
+            for (int i = 0; i < arrayOfStringExpressions.length; i++) {
                 stringExpression = arrayOfStringExpressions[i].trim();
                 // Checking if the function of the expression is empty
                 if (stringExpression.isEmpty()) {
@@ -191,6 +209,26 @@ public class Main {
 
         }
 
+        for (Expression expression : query.getValue()) {
+
+            List<String[]> listOfTupleResult = getTuples(expression.function, expression.getElementsAsArrayOfString());
+
+            System.out.println("The tuple results are:");
+            for (String[] tuple : listOfTupleResult) {
+                System.out.print("(");
+                for (int i = 0; i < tuple.length - 1; i++) {
+                    System.out.print(tuple[i] + ", ");
+                }
+                System.out.print(tuple[tuple.length - 1]);
+                System.out.print(")");
+                System.out.println();
+            }
+
+            System.out.println();
+
+        }
+
+        /*
         List<String[]> listOfTupleResult = getTuples("mb_getArtistInfoByName", "Frank Sinatra");
 
         System.out.println("The tuple results are:");
@@ -224,7 +262,7 @@ public class Main {
             }
 
         }
-
+         */
     }
 
 }
