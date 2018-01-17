@@ -14,21 +14,63 @@ import java.util.Set;
 
 public class Main {
 
-    private static class Element {
+    private static class Response {
 
-        private String value;
+        private final Collection<String> headers;
+        private final Collection<String> aliases;
+        private final Collection<String[]> tuples;
 
-        public Element(String value) {
-            this.value = value;
+        private Response(Collection<String> headers, Collection<String> aliases, Collection<String[]> tuples) {
+            this.headers = headers;
+            this.aliases = aliases;
+            this.tuples = tuples;
         }
 
-        public Boolean isVariable() {
-            return value.startsWith("?");
+        private static Response getResponse(Expression expression) throws Exception {
+            WebService ws = WebServiceDescription.loadDescription(expression.function);
+
+            System.out.println(expression.function);
+
+            String fileWithCallResult = ws.getCallResult(expression.getElementsAsArrayOfString());
+
+            System.out.println("The call is: " + fileWithCallResult);
+
+            String fileWithTransfResults = ws.getTransformationResult(fileWithCallResult);
+
+            Collection<String[]> tuples = ParseResultsForWS.showResults(fileWithTransfResults, ws);
+
+            Collection<String> aliases = new LinkedList<>();
+
+            for (Expression.Element element : expression.elements) {
+                if (element.isVariable()) {
+                    aliases.add(element.value);
+                } else {
+                    aliases.add("");
+                }
+            }
+
+            Collection<String> headers = ws.headVariables;
+
+            return new Response(headers, aliases, tuples);
         }
 
     }
 
     private static class Expression {
+
+        private static class Element {
+
+            private String value;
+
+            public Element(String value) {
+                this.value = value;
+            }
+
+            public Boolean isVariable() {
+                return value.startsWith("?");
+            }
+
+        }
 
         private String function;
         private Collection<Element> elements;
@@ -196,29 +238,23 @@ public class Main {
         }
 
         private Collection<String> headers;
-        private Collection<String> alias;
+        private Collection<String> aliases;
         private Collection<Row> rows;
 
         public Relation() {
             this.headers = new LinkedList<>();
-            this.alias = new LinkedList<>();
+            this.aliases = new LinkedList<>();
             this.rows = new LinkedList<>();
         }
 
         /**
          *
          */
-        private void appendHeaders(Collection<String> headers, Collection<Element> alias) {
+        private void appendHeaders(Collection<String> headers, Collection<String> aliases) {
             //
             this.headers.addAll(headers);
             //
-            for (Element element : alias) {
-                if (element.isVariable()) {
-                    this.alias.add(element.value);
-                } else {
-                    this.alias.add("");
-                }
-            }
+            this.aliases.addAll(aliases);
         }
 
         /**
@@ -237,31 +273,34 @@ public class Main {
         /**
          *
          */
+        private void appendResponse(Response response) {
+            appendHeaders(response.headers, response.headers);
+            appendTuplesAsRows(response.tuples);
+        }
+
+        /**
+         *
+         */
+        public void join(Expression expression) {
+
+        }
+
+        /**
+         *
+         */
         private static Relation getRelation(Expression expression) throws Exception {
-
-            WebService ws = WebServiceDescription.loadDescription(expression.function);
-
-            System.out.println(expression.function);
-
-            String fileWithCallResult = ws.getCallResult(expression.getElementsAsArrayOfString());
-
-            System.out.println("The call is: " + fileWithCallResult);
-
-            String fileWithTransfResults = ws.getTransformationResult(fileWithCallResult);
-
-            Collection<String[]> tuples = ParseResultsForWS.showResults(fileWithTransfResults, ws);
-
             Relation relation = new Relation();
 
-            relation.appendHeaders(ws.headVariables, expression.elements);
+            relation.appendResponse(Response.getResponse(expression));
 
-            relation.appendTuplesAsRows(tuples);
-            
             return relation;
         }
 
     }
 
+    /**
+     *
+     */
     public static final void main(String[] args) throws Exception {
         args = new String[1];
 
@@ -277,13 +316,17 @@ public class Main {
 
         }
 
+        Relation relation = null;
+
         for (Expression expression : query.getValue()) {
 
-            Relation relation = Relation.getRelation(expression);
+            if (relation == null) {
+                relation = Relation.getRelation(expression);
+            }
 
             System.out.println("The tuple results are:");
             for (Relation.Row row : relation.rows) {
-                System.out.print("(");                
+                System.out.print("(");
                 for (int i = 0; i < row.values.size() - 1; i++) {
                     System.out.print(((LinkedList) row.values).get(i) + ", ");
                 }
