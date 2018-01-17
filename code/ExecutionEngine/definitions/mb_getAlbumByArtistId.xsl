@@ -24,7 +24,8 @@
                     <xsl:text>&#10; &#32;</xsl:text> 
                     <ITEM ANGIE-VAR='?albumName'>
                         <xsl:value-of select="mb:title"/>
-                    </ITEM>                     
+                    </ITEM>                   
+                    <xsl:text>&#10;</xsl:text>  
                 </RECORD>
                
             </xsl:for-each>  
