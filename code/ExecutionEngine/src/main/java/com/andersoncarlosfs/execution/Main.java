@@ -288,6 +288,23 @@ public class Main {
         /**
          *
          */
+        public void print() {
+            System.out.println("The tuple results are:");
+            for (Row row : rows) {
+                System.out.print("(");
+                for (int i = 0; i < row.values.size() - 1; i++) {
+                    System.out.print(((LinkedList) row.values).get(i) + ", ");
+                }
+                System.out.print(((LinkedList) row.values).get(row.values.size() - 1));
+                System.out.print(")");
+                System.out.println();
+            }
+            System.out.println();
+        }
+
+        /**
+         *
+         */
         private static Relation getRelation(Expression expression) throws Exception {
             Relation relation = new Relation();
 
@@ -322,20 +339,11 @@ public class Main {
 
             if (relation == null) {
                 relation = Relation.getRelation(expression);
+            } else {
+                relation.join(expression);
             }
-
-            System.out.println("The tuple results are:");
-            for (Relation.Row row : relation.rows) {
-                System.out.print("(");
-                for (int i = 0; i < row.values.size() - 1; i++) {
-                    System.out.print(((LinkedList) row.values).get(i) + ", ");
-                }
-                System.out.print(((LinkedList) row.values).get(row.values.size() - 1));
-                System.out.print(")");
-                System.out.println();
-            }
-
-            System.out.println();
+            
+            relation.print();
 
         }
 
