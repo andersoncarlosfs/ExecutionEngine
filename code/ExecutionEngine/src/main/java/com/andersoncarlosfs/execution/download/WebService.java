@@ -142,6 +142,14 @@ public class WebService {
          */
         return downloadCallResults(getURLForCallWithInputs(inputs), fileWithCallResult);
     }
+    
+    /**
+     * @param inputs
+     * @return the file where the call result is stored
+     */
+    public String getCallResult(List<String> inputs) {
+        return getCallResult(inputs.toArray(new String[inputs.size()]));
+    }
 
     /**
      * @param fileWithCallResult

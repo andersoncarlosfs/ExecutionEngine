@@ -4,7 +4,6 @@ import com.andersoncarlosfs.execution.parsers.ParseResultsForWS;
 import com.andersoncarlosfs.execution.parsers.WebServiceDescription;
 import com.andersoncarlosfs.execution.download.WebService;
 import java.util.AbstractMap;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -32,9 +31,9 @@ public class Main {
         }
 
         private String function;
-        private Collection<Element> elements;
+        private List<Element> elements;
 
-        public Expression(String function, Collection<Element> elements) {
+        public Expression(String function, List<Element> elements) {
             this.function = function;
             this.elements = elements;
         }
@@ -42,21 +41,12 @@ public class Main {
         /**
          *
          */
-        public Collection<String> getElementsAsListOfString() {
+        public List<String> getElementsAsListOfString() {
             List<String> list = new LinkedList<>();
             for (Element element : elements) {
                 list.add(element.value);
             }
             return list;
-        }
-
-        /**
-         *
-         */
-        public String[] getElementsAsArrayOfString() {
-            Collection<String> collection = getElementsAsListOfString();
-            String[] array = new String[collection.size()];
-            return collection.toArray(array);
         }
 
         /**
@@ -188,7 +178,7 @@ public class Main {
 
         private static class Row {
 
-            private Collection<String> values;
+            private List<String> values;
 
             public Row() {
                 this.values = new LinkedList<>();
@@ -196,9 +186,9 @@ public class Main {
 
         }
 
-        private Collection<String> headers;
-        private Collection<String> aliases;
-        private Collection<Row> rows;
+        private List<String> headers;
+        private List<String> aliases;
+        private List<Row> rows;
 
         public Relation() {
             this.headers = new LinkedList<>();
@@ -206,7 +196,7 @@ public class Main {
             this.rows = new LinkedList<>();
         }
 
-        public Relation(Collection<String> headers, Collection<String> aliases, Collection<Row> rows) {
+        public Relation(List<String> headers, List<String> aliases, List<Row> rows) {
             this.headers = headers;
             this.aliases = aliases;
             this.rows = rows;
@@ -248,12 +238,12 @@ public class Main {
         /**
          *
          */
-        public void join(Expression expression) {
+        public void join(Expression expression) throws Exception {
             WebService ws = WebServiceDescription.loadDescription(expression.function);
 
             System.out.println(expression.function);
 
-            Map<Expression.Element, Integer> parameters = new LinkedHashMap<>();
+            Map<String, Integer> parameters = new LinkedHashMap<>();
 
             int variables = 0;
 
@@ -262,7 +252,7 @@ public class Main {
 
                 Integer index = getIndexOfHeaderOrAlias(element);
 
-                parameters.put(element, index);
+                parameters.put(element.value, index);
 
                 variables += index;
             }
@@ -271,6 +261,32 @@ public class Main {
                 System.out.println("Cartesian Product is not allowed");
 
                 System.exit(0);
+            }
+
+            for (Row row : rows) {
+
+                List<String> inputList = new LinkedList<>();
+
+                for (Map.Entry<String, Integer> entry : parameters.entrySet()) {
+
+                    String value = entry.getKey();
+
+                    Integer index = entry.getValue();
+
+                    if (index < 0) {
+                        inputList.add(value);
+                    } else {
+                        inputList.add((String) ((LinkedList) row.values).get(index));
+                    }
+
+                }
+
+                String fileWithCallResult = ws.getCallResult(expression.getElementsAsListOfString());
+
+                System.out.println("The call is: " + fileWithCallResult);
+
+                String fileWithTransfResults = ws.getTransformationResult(fileWithCallResult);
+
             }
 
         }
@@ -300,13 +316,13 @@ public class Main {
 
             System.out.println(expression.function);
 
-            String fileWithCallResult = ws.getCallResult(expression.getElementsAsArrayOfString());
+            String fileWithCallResult = ws.getCallResult(expression.getElementsAsListOfString());
 
             System.out.println("The call is: " + fileWithCallResult);
 
             String fileWithTransfResults = ws.getTransformationResult(fileWithCallResult);
 
-            Collection<Row> rows = new LinkedList<>();
+            List<Row> rows = new LinkedList<>();
 
             for (String[] tuple : ParseResultsForWS.showResults(fileWithTransfResults, ws)) {
                 Row row = new Row();
@@ -316,7 +332,7 @@ public class Main {
                 rows.add(row);
             }
 
-            Collection<String> aliases = new LinkedList<>();
+            List<String> aliases = new LinkedList<>();
 
             for (Expression.Element element : expression.elements) {
                 if (element.isVariable()) {
@@ -326,7 +342,7 @@ public class Main {
                 }
             }
 
-            Collection<String> headers = ws.headVariables;
+            List<String> headers = ws.headVariables;
 
             return new Relation(headers, aliases, rows);
         }
@@ -358,7 +374,7 @@ public class Main {
             if (relation == null) {
                 relation = Relation.getRelation(expression);
             } else {
-                relation.join(expression);
+                //relation.join(expression);
             }
 
             relation.print();
