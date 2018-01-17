@@ -287,7 +287,7 @@ public class Main {
 
                 }
 
-                String fileWithCallResult = ws.getCallResult(expression.getElementsAsListOfString());
+                String fileWithCallResult = ws.getCallResult(inputList);
 
                 System.out.println("The call is: " + fileWithCallResult);
 
