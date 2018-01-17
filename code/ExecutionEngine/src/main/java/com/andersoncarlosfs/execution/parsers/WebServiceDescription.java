@@ -63,7 +63,7 @@ public class WebServiceDescription {
 
                 prefixes.put(prefix_name.trim(), prefix_value.trim());
 
-                System.out.println("name=" + prefix_name.trim() + " value=" + prefix_value.trim());
+                System.out.println("prefix=" + prefix_name.trim() + " value=" + prefix_value.trim());
             }
 
             /**
@@ -95,7 +95,7 @@ public class WebServiceDescription {
                 headVariables.add(name.trim());
                 headVariableToPosition.put(name.trim(), new Integer(i));
 
-                System.out.println("name=" + name + " position=" + i);
+                System.out.println("variable=" + name + " position=" + i);
             }
 
             /**

@@ -412,7 +412,7 @@ public class Main {
             if (relation == null) {
                 relation = Relation.getRelation(expression);
             } else {
-                //relation.join(expression);
+                relation.join(expression);
             }
 
             relation.print();
