@@ -19,11 +19,11 @@
                     </ITEM>
                     <xsl:text>&#10; &#32;</xsl:text> 
                     <ITEM ANGIE-VAR='?beginDate' >
-                        <xsl:value-of select="mb:life-span/begin"/>
+                        <xsl:value-of select="mb:life-span/mb:begin"/>
                     </ITEM>
                     <xsl:text>&#10; &#32;</xsl:text> 
                     <ITEM ANGIE-VAR='?endDate'>
-                        <xsl:value-of select="mb:life-span/end"/>
+                        <xsl:value-of select="mb:life-span/mb:end"/>
                     </ITEM>  
                     <xsl:text>&#10;</xsl:text>                  
                 </RECORD>
