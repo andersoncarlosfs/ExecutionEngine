@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?><RESULT xmlns:mb="http://musicbrainz.org/ns/mmd-2.0#">
+<RECORD>
+  <ITEM ANGIE-VAR="?artistId">
+                        NOT DEFINED
+                    </ITEM>
+  <ITEM ANGIE-VAR="?beginDate">2015-02-24</ITEM>
+  <ITEM ANGIE-VAR="?albumId">6b9bb75f-9eeb-4860-8aaf-af5970974f57</ITEM>
+  <ITEM ANGIE-VAR="?albumName">SHAMANIQ</ITEM></RECORD>
+<RECORD>
+  <ITEM ANGIE-VAR="?artistId">
+                        NOT DEFINED
+                    </ITEM>
+  <ITEM ANGIE-VAR="?beginDate">2016-02-01</ITEM>
+  <ITEM ANGIE-VAR="?albumId">952720ed-6997-4ba9-94c3-0337edbc0fc7</ITEM>
+  <ITEM ANGIE-VAR="?albumName">Portals</ITEM></RECORD></RESULT>

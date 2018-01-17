@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?><RESULT xmlns:mb="http://musicbrainz.org/ns/mmd-2.0#">
+<RECORD>
+  <ITEM ANGIE-VAR="?artistId">
+                        NOT DEFINED
+                    </ITEM>
+  <ITEM ANGIE-VAR="?beginDate">2006-08</ITEM>
+  <ITEM ANGIE-VAR="?albumId">096d4e86-4149-4fde-aed8-f1e9adc09577</ITEM>
+  <ITEM ANGIE-VAR="?albumName">Pack Rat</ITEM></RECORD>
+<RECORD>
+  <ITEM ANGIE-VAR="?artistId">
+                        NOT DEFINED
+                    </ITEM>
+  <ITEM ANGIE-VAR="?beginDate">2004</ITEM>
+  <ITEM ANGIE-VAR="?albumId">2064b919-a1de-4a1a-ab11-975851823df6</ITEM>
+  <ITEM ANGIE-VAR="?albumName">Chairman of the Bored</ITEM></RECORD>
+<RECORD>
+  <ITEM ANGIE-VAR="?artistId">
+                        NOT DEFINED
+                    </ITEM>
+  <ITEM ANGIE-VAR="?beginDate">2011-08-16</ITEM>
+  <ITEM ANGIE-VAR="?albumId">edfc934c-6d03-4134-978e-1469eebdd1a0</ITEM>
+  <ITEM ANGIE-VAR="?albumName">Rank Sinatra's Greatest Hits</ITEM></RECORD></RESULT>
