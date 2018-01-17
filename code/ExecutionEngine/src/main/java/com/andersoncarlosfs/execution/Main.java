@@ -14,56 +14,6 @@ import java.util.Set;
 
 public class Main {
 
-    private static class Response {
-
-        private final Collection<String> headers;
-        private final Collection<String> aliases;
-        private final Collection<Relation.Row> rows;
-
-        private Response(Collection<String> headers, Collection<String> aliases, Collection<Relation.Row> rows) {
-            this.headers = headers;
-            this.aliases = aliases;
-            this.rows = rows;
-        }
-
-        private static Response getResponse(Expression expression) throws Exception {
-            WebService ws = WebServiceDescription.loadDescription(expression.function);
-
-            System.out.println(expression.function);
-
-            String fileWithCallResult = ws.getCallResult(expression.getElementsAsArrayOfString());
-
-            System.out.println("The call is: " + fileWithCallResult);
-
-            String fileWithTransfResults = ws.getTransformationResult(fileWithCallResult);
-
-            Collection<Relation.Row> rows = new LinkedList<>();
-
-            for (String[] tuple : ParseResultsForWS.showResults(fileWithTransfResults, ws)) {
-                Relation.Row row = new Relation.Row();
-                for (String value : tuple) {
-                    row.values.add(value);
-                }
-                rows.add(row);
-            }
-
-            Collection<String> aliases = new LinkedList<>();
-
-            for (Expression.Element element : expression.elements) {
-                if (element.isVariable()) {
-                    aliases.add(element.value);
-                } else {
-                    aliases.add("");
-                }
-            }
-
-            Collection<String> headers = ws.headVariables;
-
-            return new Response(headers, aliases, rows);
-        }
-
-    }
-
     private static class Expression {
 
         private static class Element {
@@ -255,33 +205,25 @@ public class Main {
             this.rows = new LinkedList<>();
         }
 
-        private Relation(Response response) {
-            this.headers = response.headers;
-            this.aliases = response.aliases;
-            this.rows = response.rows;
-        }
-
-        /**
-         *
-         */
-        private void appendHeaders(Collection<String> headers, Collection<String> aliases) {
-            //
-            this.headers.addAll(headers);
-            //
-            this.aliases.addAll(aliases);
-        }
-
-        /**
-         *
-         */
-        private void appendHeaders(Response response) {
-            appendHeaders(response.headers, response.headers);
+        public Relation(Collection<String> headers, Collection<String> aliases, Collection<Row> rows) {
+            this.headers = headers;
+            this.aliases = aliases;
+            this.rows = rows;
         }
 
         /**
          *
          */
         public void join(Expression expression) {
+            WebService ws = WebServiceDescription.loadDescription(expression.function);
+
+            System.out.println(expression.function);
+
+            Collection<String> parameters = new LinkedList<>();
+
+            for (Expression.Element element : expression.elements) {
+
+            }
 
         }
 
@@ -306,7 +248,39 @@ public class Main {
          *
          */
         private static Relation getRelation(Expression expression) throws Exception {
-            return new Relation(Response.getResponse(expression));
+            WebService ws = WebServiceDescription.loadDescription(expression.function);
+
+            System.out.println(expression.function);
+
+            String fileWithCallResult = ws.getCallResult(expression.getElementsAsArrayOfString());
+
+            System.out.println("The call is: " + fileWithCallResult);
+
+            String fileWithTransfResults = ws.getTransformationResult(fileWithCallResult);
+
+            Collection<Row> rows = new LinkedList<>();
+
+            for (String[] tuple : ParseResultsForWS.showResults(fileWithTransfResults, ws)) {
+                Row row = new Row();
+                for (String value : tuple) {
+                    row.values.add(value);
+                }
+                rows.add(row);
+            }
+
+            Collection<String> aliases = new LinkedList<>();
+
+            for (Expression.Element element : expression.elements) {
+                if (element.isVariable()) {
+                    aliases.add(element.value);
+                } else {
+                    aliases.add("");
+                }
+            }
+
+            Collection<String> headers = ws.headVariables;
+
+            return new Relation(headers, aliases, rows);
         }
 
     }
