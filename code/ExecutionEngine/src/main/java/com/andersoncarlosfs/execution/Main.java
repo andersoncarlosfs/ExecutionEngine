@@ -232,6 +232,7 @@ public class Main {
                 index++;
             }
 
+            // Variable was not found
             System.out.println("Query not well formed");
 
             System.exit(0);
@@ -248,7 +249,7 @@ public class Main {
             System.out.println(expression.function);
 
             if (ws.headVariables.size() != expression.elements.size()) {
-                System.out.println("Cartesian Product is not allowed");
+                System.out.println("Query not well formed");
 
                 System.exit(0);
             }
@@ -268,7 +269,7 @@ public class Main {
             }
 
             if (variables <= -parameters.size()) {
-                System.out.println("Query not well formed");
+                System.out.println("Cartesian Product is not allowed");
 
                 System.exit(0);
             }
@@ -361,7 +362,7 @@ public class Main {
             System.out.println(expression.function);
 
             if (ws.headVariables.size() != expression.elements.size()) {
-                System.out.println("Cartesian Product is not allowed");
+                System.out.println("Query not well formed");
 
                 System.exit(0);
             }
@@ -410,11 +411,9 @@ public class Main {
         Map.Entry<Expression, List<Expression>> query = Expression.getQuery(args[0]);
 
         if (!Expression.isQueryConsitent(query)) {
-
             System.out.println("Query not well formed");
 
             System.exit(0);
-
         }
 
         Relation relation = null;
