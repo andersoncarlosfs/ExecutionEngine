@@ -184,6 +184,10 @@ public class Main {
                 this.values = new LinkedList<>();
             }
 
+            private Row(Row row) {
+                this.values = new LinkedList<>(row.values);
+            }
+
         }
 
         private List<String> headers;
@@ -263,7 +267,9 @@ public class Main {
                 System.exit(0);
             }
 
-            for (Row row : rows) {
+            List<Row> newRows = new LinkedList<>();
+
+            for (Row currentRow : rows) {
 
                 List<String> inputList = new LinkedList<>();
 
@@ -276,7 +282,7 @@ public class Main {
                     if (index < 0) {
                         inputList.add(value);
                     } else {
-                        inputList.add((String) ((LinkedList) row.values).get(index));
+                        inputList.add((String) ((LinkedList) currentRow.values).get(index));
                     }
 
                 }
@@ -287,7 +293,39 @@ public class Main {
 
                 String fileWithTransfResults = ws.getTransformationResult(fileWithCallResult);
 
+                for (String[] tuple : ParseResultsForWS.showResults(fileWithTransfResults, ws)) {
+                    Row newRow = new Row(currentRow);
+                    for (int i = 0; i < tuple.length; i++) {
+                        if (!parameters.containsValue(i)) {
+                            newRow.values.add(tuple[i]);
+                        }
+                    }
+                    newRows.add(newRow);
+                }
+
             }
+
+            for (int i = 0; i < ws.headVariables.size(); i++) {
+
+                String header = ws.headVariables.get(i);
+
+                if (!headers.contains(header)) {
+
+                    Expression.Element element = (Expression.Element) ((LinkedList) expression.elements).get(i);
+
+                    if (element.isVariable()) {
+                        aliases.add(element.value);
+                    } else {
+                        aliases.add("");
+                    }
+
+                    headers.add(header);
+
+                }
+
+            }
+
+            rows = newRows;
 
         }
 
