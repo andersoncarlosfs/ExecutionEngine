@@ -13,3 +13,4 @@ Consitency1 raise error if there is not "<-" symbols or more than one
 Consitency2 raise error if there empty clausules ","
 Consitency3 raise error if the query doesn't have head 
 Consitency4 raise error if the query doesn't have body 
+Consitency5 Cartesian Product is not allowed

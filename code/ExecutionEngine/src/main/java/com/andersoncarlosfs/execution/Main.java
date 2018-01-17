@@ -214,16 +214,58 @@ public class Main {
         /**
          *
          */
+        private int getIndexOfHeaderOrAlias(String variable) {
+            // Checking if the headers contain the variable    
+            int index = 0;
+            for (String value : headers) {
+                if (value.equals(variable)) {
+                    return index;
+                }
+                index++;
+            }
+            // Checking if the aliases contain the variable            
+            index = 0;
+            for (String value : aliases) {
+                if (value.equals(variable)) {
+                    return index;
+                }
+                index++;
+            }
+
+            System.out.println("Query not well formed");
+
+            System.exit(0);
+
+            return -1;
+        }
+
+        /**
+         *
+         */
         public void join(Expression expression) {
             WebService ws = WebServiceDescription.loadDescription(expression.function);
 
             System.out.println(expression.function);
 
-            Collection<String> parameters = new LinkedList<>();
+            Collection<Expression.Element> parameters = new LinkedList<>();
 
-            for (Expression.Element element : expression.elements) {
+            int variables = 0;
 
+            for (int i = 0; i < ws.numberOfInputs; i++) {
+                Expression.Element element = (Expression.Element) ((LinkedList) expression.elements).get(i);
+                if (element.isVariable()) {
+                    variables++;
+                }
+                parameters.add(element);
             }
+
+            if (variables <= 0) {
+                System.out.println("Cartesian Product is not allowed");
+
+                System.exit(0);
+            }
+            
+            
 
         }
 
