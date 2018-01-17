@@ -344,7 +344,7 @@ public class Main {
             for (Row row : rows) {
                 System.out.print("(");
                 for (int i = 0; i < row.values.size() - 1; i++) {
-                    System.out.print(((LinkedList) row.values).get(i) + ", ");
+                    System.out.print(((LinkedList) row.values).get(i) + "; ");
                 }
                 System.out.print(((LinkedList) row.values).get(row.values.size() - 1));
                 System.out.print(")");

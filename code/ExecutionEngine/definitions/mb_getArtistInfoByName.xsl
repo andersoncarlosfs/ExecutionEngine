@@ -2,7 +2,7 @@
 
 <!-- Created by Clement on 090524 -->
 
-<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:mb="http://musicbrainz.org/ns/mmd-1.0#">
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:mb="http://musicbrainz.org/ns/mmd-2.0#">
     <xsl:template match="/">
         <RESULT>
             <xsl:for-each select="*[local-name()='metadata']/*[local-name()='artist-list']/*[local-name()='artist']">
