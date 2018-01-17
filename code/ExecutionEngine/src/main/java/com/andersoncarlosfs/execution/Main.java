@@ -247,6 +247,12 @@ public class Main {
 
             System.out.println(expression.function);
 
+            if (ws.headVariables.size() != expression.elements.size()) {
+                System.out.println("Cartesian Product is not allowed");
+
+                System.exit(0);
+            }
+
             Map<String, Integer> parameters = new LinkedHashMap<>();
 
             int variables = 0;
@@ -262,7 +268,7 @@ public class Main {
             }
 
             if (variables <= -parameters.size()) {
-                System.out.println("Cartesian Product is not allowed");
+                System.out.println("Query not well formed");
 
                 System.exit(0);
             }
@@ -353,6 +359,12 @@ public class Main {
             WebService ws = WebServiceDescription.loadDescription(expression.function);
 
             System.out.println(expression.function);
+
+            if (ws.headVariables.size() != expression.elements.size()) {
+                System.out.println("Cartesian Product is not allowed");
+
+                System.exit(0);
+            }
 
             String fileWithCallResult = ws.getCallResult(expression.getElementsAsListOfString());
 
