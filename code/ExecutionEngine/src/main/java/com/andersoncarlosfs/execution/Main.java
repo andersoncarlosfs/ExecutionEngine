@@ -18,12 +18,12 @@ public class Main {
 
         private final Collection<String> headers;
         private final Collection<String> aliases;
-        private final Collection<String[]> tuples;
+        private final Collection<Relation.Row> rows;
 
-        private Response(Collection<String> headers, Collection<String> aliases, Collection<String[]> tuples) {
+        private Response(Collection<String> headers, Collection<String> aliases, Collection<Relation.Row> rows) {
             this.headers = headers;
             this.aliases = aliases;
-            this.tuples = tuples;
+            this.rows = rows;
         }
 
         private static Response getResponse(Expression expression) throws Exception {
@@ -37,7 +37,15 @@ public class Main {
 
             String fileWithTransfResults = ws.getTransformationResult(fileWithCallResult);
 
-            Collection<String[]> tuples = ParseResultsForWS.showResults(fileWithTransfResults, ws);
+            Collection<Relation.Row> rows = new LinkedList<>();
+
+            for (String[] tuple : ParseResultsForWS.showResults(fileWithTransfResults, ws)) {
+                Relation.Row row = new Relation.Row();
+                for (String value : tuple) {
+                    row.values.add(value);
+                }
+                rows.add(row);
+            }
 
             Collection<String> aliases = new LinkedList<>();
 
@@ -51,7 +59,7 @@ public class Main {
 
             Collection<String> headers = ws.headVariables;
 
-            return new Response(headers, aliases, tuples);
+            return new Response(headers, aliases, rows);
         }
 
     }
@@ -247,6 +255,12 @@ public class Main {
             this.rows = new LinkedList<>();
         }
 
+        private Relation(Response response) {
+            this.headers = response.headers;
+            this.aliases = response.aliases;
+            this.rows = response.rows;
+        }
+
         /**
          *
          */
@@ -260,22 +274,8 @@ public class Main {
         /**
          *
          */
-        private void appendTuplesAsRows(Collection<String[]> tuples) {
-            for (String[] tuple : tuples) {
-                Row row = new Row();
-                for (String value : tuple) {
-                    row.values.add(value);
-                }
-                rows.add(row);
-            }
-        }
-
-        /**
-         *
-         */
-        private void appendResponse(Response response) {
+        private void appendHeaders(Response response) {
             appendHeaders(response.headers, response.headers);
-            appendTuplesAsRows(response.tuples);
         }
 
         /**
@@ -306,11 +306,7 @@ public class Main {
          *
          */
         private static Relation getRelation(Expression expression) throws Exception {
-            Relation relation = new Relation();
-
-            relation.appendResponse(Response.getResponse(expression));
-
-            return relation;
+            return new Relation(Response.getResponse(expression));
         }
 
     }
@@ -342,7 +338,7 @@ public class Main {
             } else {
                 relation.join(expression);
             }
-            
+
             relation.print();
 
         }
