@@ -7,6 +7,7 @@ import java.util.AbstractMap;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -214,7 +215,12 @@ public class Main {
         /**
          *
          */
-        private int getIndexOfHeaderOrAlias(String variable) {
+        private int getIndexOfHeaderOrAlias(Expression.Element element) {
+            // Checking if the element is a variable    
+            if (element.isVariable()) {
+                return -1;
+            }
+            String variable = element.value;
             // Checking if the headers contain the variable    
             int index = 0;
             for (String value : headers) {
@@ -247,25 +253,25 @@ public class Main {
 
             System.out.println(expression.function);
 
-            Collection<Expression.Element> parameters = new LinkedList<>();
+            Map<Expression.Element, Integer> parameters = new LinkedHashMap<>();
 
             int variables = 0;
 
             for (int i = 0; i < ws.numberOfInputs; i++) {
                 Expression.Element element = (Expression.Element) ((LinkedList) expression.elements).get(i);
-                if (element.isVariable()) {
-                    variables++;
-                }
-                parameters.add(element);
+
+                Integer index = getIndexOfHeaderOrAlias(element);
+
+                parameters.put(element, index);
+
+                variables += index;
             }
 
-            if (variables <= 0) {
+            if (variables <= -parameters.size()) {
                 System.out.println("Cartesian Product is not allowed");
 
                 System.exit(0);
             }
-            
-            
 
         }
 
