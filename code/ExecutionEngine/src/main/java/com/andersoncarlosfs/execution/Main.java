@@ -211,7 +211,7 @@ public class Main {
          */
         private int getIndexOfHeaderOrAlias(Expression.Element element) {
             // Checking if the element is a variable    
-            if (element.isVariable()) {
+            if (!element.isVariable()) {
                 return -1;
             }
             String variable = element.value;
