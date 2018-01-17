@@ -183,22 +183,83 @@ public class Main {
 
     }
 
-    /**
-     *
-     */
-    private static List<String[]> getTuples(String description, String... parameters) throws Exception {
+    private static class Relation {
 
-        WebService ws = WebServiceDescription.loadDescription(description);
+        private static class Row {
 
-        System.out.println(description);
+            private Collection<String> values;
 
-        String fileWithCallResult = ws.getCallResult(parameters);
+            public Row() {
+                this.values = new LinkedList<>();
+            }
 
-        System.out.println("The call is: " + fileWithCallResult);
+        }
 
-        String fileWithTransfResults = ws.getTransformationResult(fileWithCallResult);
+        private Collection<String> headers;
+        private Collection<String> alias;
+        private Collection<Row> rows;
 
-        return ParseResultsForWS.showResults(fileWithTransfResults, ws);
+        public Relation() {
+            this.headers = new LinkedList<>();
+            this.alias = new LinkedList<>();
+            this.rows = new LinkedList<>();
+        }
+
+        /**
+         *
+         */
+        private void appendHeaders(Collection<String> headers, Collection<Element> alias) {
+            //
+            this.headers.addAll(headers);
+            //
+            for (Element element : alias) {
+                if (element.isVariable()) {
+                    this.alias.add(element.value);
+                } else {
+                    this.alias.add("");
+                }
+            }
+        }
+
+        /**
+         *
+         */
+        private void appendTuplesAsRows(Collection<String[]> tuples) {
+            for (String[] tuple : tuples) {
+                Row row = new Row();
+                for (String value : tuple) {
+                    row.values.add(value);
+                }
+                rows.add(row);
+            }
+        }
+
+        /**
+         *
+         */
+        private static Relation getRelation(Expression expression) throws Exception {
+
+            WebService ws = WebServiceDescription.loadDescription(expression.function);
+
+            System.out.println(expression.function);
+
+            String fileWithCallResult = ws.getCallResult(expression.getElementsAsArrayOfString());
+
+            System.out.println("The call is: " + fileWithCallResult);
+
+            String fileWithTransfResults = ws.getTransformationResult(fileWithCallResult);
+
+            Collection<String[]> tuples = ParseResultsForWS.showResults(fileWithTransfResults, ws);
+
+            Relation relation = new Relation();
+
+            relation.appendHeaders(ws.headVariables, expression.elements);
+
+            relation.appendTuplesAsRows(tuples);
+            
+            return relation;
+        }
+
     }
 
     public static final void main(String[] args) throws Exception {
@@ -218,15 +279,15 @@ public class Main {
 
         for (Expression expression : query.getValue()) {
 
-            List<String[]> listOfTupleResult = getTuples(expression.function, expression.getElementsAsArrayOfString());
+            Relation relation = Relation.getRelation(expression);
 
             System.out.println("The tuple results are:");
-            for (String[] tuple : listOfTupleResult) {
-                System.out.print("(");
-                for (int i = 0; i < tuple.length - 1; i++) {
-                    System.out.print(tuple[i] + ", ");
+            for (Relation.Row row : relation.rows) {
+                System.out.print("(");                
+                for (int i = 0; i < row.values.size() - 1; i++) {
+                    System.out.print(((LinkedList) row.values).get(i) + ", ");
                 }
-                System.out.print(tuple[tuple.length - 1]);
+                System.out.print(((LinkedList) row.values).get(row.values.size() - 1));
                 System.out.print(")");
                 System.out.println();
             }
