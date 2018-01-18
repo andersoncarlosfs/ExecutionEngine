@@ -217,17 +217,17 @@ public class Main {
             }
             String variable = element.value;
              */
-            // Checking if the headers contain the variable    
+            // Checking if the aliases contain the variable            
             int index = 0;
-            for (String value : headers) {
+            for (String value : aliases) {
                 if (value.equals(variable)) {
                     return index;
                 }
                 index++;
             }
-            // Checking if the aliases contain the variable            
+            // Checking if the headers contain the variable    
             index = 0;
-            for (String value : aliases) {
+            for (String value : headers) {
                 if (value.equals(variable)) {
                     return index;
                 }
