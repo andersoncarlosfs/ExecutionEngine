@@ -15,6 +15,10 @@ public class JSONToXML {
             while ((line = br.readLine()) != null) {
                 content.append(line);
             }
+        } catch (Exception exception) {
+            System.out.println("Error in the content");
+
+            throw exception;
         }
         return content.toString();
     }
@@ -22,6 +26,10 @@ public class JSONToXML {
     public static final void storeContentInFile(String content, String filePath) throws Exception {
         try (FileWriter fOut = new FileWriter(filePath)) {
             fOut.write(content);
+        } catch (Exception exception) {
+            System.out.println("Error in the storage");
+
+            throw exception;
         }
     }
 
