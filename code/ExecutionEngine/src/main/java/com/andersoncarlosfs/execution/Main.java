@@ -126,11 +126,27 @@ public class Main {
             String[] parts = query.split("<-");
             // Checking if the query is composed by two (2) parts
             if (parts.length != 2) {
-                return null;
+                //return null;
+                System.out.println("Query not well formed: The query does not contains a head and a body well defined");
+
+                System.exit(0);
             }
             Expression head = getExpression(parts[0]);
             List<Expression> body = getListOfExpression(parts[1]);
-            return head == null || body == null ? null : new AbstractMap.SimpleEntry(head, body);
+            // Checking if the query contains a head
+            // Checking if the query contains a body
+            //return head == null || body == null ? null : new AbstractMap.SimpleEntry(head, body);
+            if (head == null) {
+                System.out.println("Query not well formed: The query does not contains a head");
+
+                System.exit(0);
+            }
+            if (body == null) {
+                System.out.println("Query not well formed: The query does not contains a body");
+
+                System.exit(0);
+            }
+            return new AbstractMap.SimpleEntry(head, body);
         }
 
         /**
@@ -164,7 +180,23 @@ public class Main {
             // Checking if the head is not empty
             // Checking if the body contains a least one constant
             // Checking if the body contains all variables in the head 
-            return !query.getKey().elements.isEmpty() && !bodyConstants.isEmpty() && bodyVariables.contains(headVariables);
+            //return !query.getKey().elements.isEmpty() && !bodyConstants.isEmpty() && bodyVariables.contains(headVariables);
+            if (query.getKey().elements.isEmpty()) {
+                System.out.println("Query not well formed: The function \"" + query.getKey().function + "\" doest not have body");
+
+                System.exit(0);
+            }
+            if (bodyConstants.isEmpty()) {
+                System.out.println("Query not well formed: The body of the query only contains variables");
+
+                System.exit(0);
+            }
+            if (!bodyVariables.contains(headVariables)) {
+                System.out.println("Query not well formed: The head of the query cotains variables that does not appear on the body of the query");
+
+                System.exit(0);
+            }
+            return true;
         }
 
     }
@@ -470,11 +502,14 @@ public class Main {
 
         Map.Entry<Expression, List<Expression>> query = Expression.getQuery(args[0]);
 
+        /*        
         if (!Expression.isQueryConsitent(query)) {
             System.out.println("Query not well formed");
 
             System.exit(0);
         }
+         */
+        Expression.isQueryConsitent(query);
 
         Relation relation = null;
 
