@@ -169,6 +169,22 @@ public class Main {
             List<String> bodyConstants = new LinkedList<>();
             List<String> bodyVariables = new LinkedList<>();
             for (Expression expression : query.getValue()) {
+
+                WebService ws = WebServiceDescription.loadDescription(expression.function);
+
+                // Checking if the function is defined
+                if (ws == null) {
+                    System.out.println("Query not well formed: The function \"" + expression.function + "\" is not defined");
+
+                    System.exit(0);
+                }
+
+                if (ws.headVariables.size() != expression.elements.size()) {
+                    System.out.println("Query not well formed: The function \"" + expression.function + "\" was defined with " + ws.headVariables.size() + " arguments and " + expression.elements.size() + " was found");
+
+                    System.exit(0);
+                }
+
                 for (Element element : expression.elements) {
                     if (element.isVariable()) {
                         bodyVariables.add(element.value);
@@ -176,6 +192,7 @@ public class Main {
                         bodyConstants.add(element.value);
                     }
                 }
+
             }
             // Checking if the head is not empty
             // Checking if the body contains a least one constant
@@ -451,12 +468,6 @@ public class Main {
             WebService ws = WebServiceDescription.loadDescription(expression.function);
 
             System.out.println(expression.function);
-
-            if (ws.headVariables.size() != expression.elements.size()) {
-                System.out.println("Query not well formed");
-
-                System.exit(0);
-            }
 
             String fileWithCallResult = ws.getCallResult(expression.getElementsAsListOfString());
 
