@@ -493,6 +493,8 @@ public class Main {
             relation.print();
 
         }
+        
+        relation.projection(query.getKey()).print();
 
         /*
         List<String[]> listOfTupleResult = getTuples("mb_getArtistInfoByName", "Frank Sinatra");
