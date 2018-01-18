@@ -457,7 +457,7 @@ public class Main {
                 }
             }
 
-            List<String> headers = ws.headVariables;
+            List<String> headers = new LinkedList<>(ws.headVariables);
 
             return new Relation(headers, aliases, rows);
         }
