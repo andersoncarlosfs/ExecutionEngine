@@ -235,7 +235,7 @@ public class Main {
             }
 
             // Variable was not found
-            System.out.println("Query not well formed");
+            System.out.println("Query not well formed: The variable \"" + variable + "\" was not found!");
 
             System.exit(0);
 
@@ -348,7 +348,7 @@ public class Main {
          */
         public Relation projection(Expression expression) {
             //
-            if (!expression.function.toLowerCase().matches("((p(rojection)?)|(v(iew)?))")) {
+            if (!expression.function.toLowerCase().matches("(p(rojection)?)|(v(iew)?)")) {
                 System.out.println("Query not well formed");
 
                 System.exit(0);
@@ -493,7 +493,7 @@ public class Main {
             relation.print();
 
         }
-        
+
         relation.projection(query.getKey()).print();
 
         /*
