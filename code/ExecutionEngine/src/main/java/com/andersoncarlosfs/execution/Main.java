@@ -209,12 +209,14 @@ public class Main {
         /**
          *
          */
-        private int getIndexOfHeaderOrAlias(Expression.Element element) {
+        private int getIndexOfHeaderOrAlias(String variable) {
             // Checking if the element is a variable    
+            /*
             if (!element.isVariable()) {
                 return -1;
             }
             String variable = element.value;
+             */
             // Checking if the headers contain the variable    
             int index = 0;
             for (String value : headers) {
@@ -258,21 +260,22 @@ public class Main {
 
             List<Integer> escape = new LinkedList<>();
 
-            int variables = 0;
-
             for (int i = 0; i < ws.numberOfInputs; i++) {
                 Expression.Element element = (Expression.Element) ((LinkedList) expression.elements).get(i);
 
-                Integer index = getIndexOfHeaderOrAlias(element);
+                int index = -1;
+
+                if (element.isVariable()) {
+                    index = getIndexOfHeaderOrAlias(element.value);
+
+                    escape.add(i);
+                }
 
                 parameters.put(element.value, index);
-                
-                escape.add(i + (i * (index -  index)));
 
-                variables += index;
             }
 
-            if (variables <= -parameters.size()) {
+            if (escape.isEmpty()) {
                 System.out.println("Cartesian Product is not allowed");
 
                 System.exit(0);
