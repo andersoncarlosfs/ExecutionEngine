@@ -256,6 +256,8 @@ public class Main {
 
             Map<String, Integer> parameters = new LinkedHashMap<>();
 
+            List<Integer> escape = new LinkedList<>();
+
             int variables = 0;
 
             for (int i = 0; i < ws.numberOfInputs; i++) {
@@ -264,6 +266,8 @@ public class Main {
                 Integer index = getIndexOfHeaderOrAlias(element);
 
                 parameters.put(element.value, index);
+                
+                escape.add(i + (i * (index -  index)));
 
                 variables += index;
             }
@@ -303,7 +307,7 @@ public class Main {
                 for (String[] tuple : ParseResultsForWS.showResults(fileWithTransfResults, ws)) {
                     Row newRow = new Row(currentRow);
                     for (int i = 0; i < tuple.length; i++) {
-                        if (!parameters.containsValue(i)) {
+                        if (!escape.contains(i)) {
                             newRow.values.add(tuple[i]);
                         }
                     }
