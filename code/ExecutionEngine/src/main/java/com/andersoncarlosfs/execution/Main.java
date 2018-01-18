@@ -348,7 +348,7 @@ public class Main {
          */
         public Relation projection(Expression expression) {
             //
-            if (!expression.function.toLowerCase().matches("p(rojection)?")) {
+            if (!expression.function.toLowerCase().matches("((p(rojection)?)|(v(iew)?))")) {
                 System.out.println("Query not well formed");
 
                 System.exit(0);
@@ -381,15 +381,10 @@ public class Main {
             List<Row> newRows = new LinkedList<>();
 
             for (Row currentRow : rows) {
-
                 Row newRow = new Row();
-
                 for (Integer index : newHeaders.values()) {
-
                     newRow.values.add((String) ((LinkedList) currentRow.values).get(index));
-
                 }
-
                 newRows.add(newRow);
             }
 
@@ -401,6 +396,15 @@ public class Main {
          */
         public void print() {
             System.out.println("The tuple results are:");
+
+            System.out.print("(");
+            for (int i = 0; i < headers.size() - 1; i++) {
+                System.out.print(((LinkedList) headers).get(i) + "; ");
+            }
+            System.out.print(((LinkedList) headers).get(headers.size() - 1));
+            System.out.print(")");
+            System.out.println();
+
             for (Row row : rows) {
                 System.out.print("(");
                 for (int i = 0; i < row.values.size() - 1; i++) {
