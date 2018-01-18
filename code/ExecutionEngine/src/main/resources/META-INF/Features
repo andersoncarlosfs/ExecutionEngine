@@ -15,3 +15,5 @@ Consitency3 raise error if the query doesn't have head
 Consitency4 raise error if the query doesn't have body 
 Consitency5 Cartesian Product is not allowed
 Consitency6 raise error if body of the expression has less or more variable than the description
+
+ws need to define different variables
