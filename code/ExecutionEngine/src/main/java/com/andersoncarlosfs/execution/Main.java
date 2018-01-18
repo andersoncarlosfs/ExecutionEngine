@@ -470,8 +470,9 @@ public class Main {
     public static final void main(String[] args) throws Exception {
         args = new String[1];
 
-        args[0] = "P(?title, ?year)<-mb_getArtistInfoByName(Frank Sinatra, ?id, ?b, ?e)#mb_getAlbumByArtistId(?id, ?beginDate, ?aid, ?albumName)";
-
+        //args[0] = "P(?title, ?year)<-mb_getArtistInfoByName(Frank Sinatra, ?id, ?b, ?e)#mb_getAlbumByArtistId(?id, ?beginDate, ?aid, ?albumName)";
+        args[0] = "P(?albumName, ?beginDate)<-mb_getArtistInfoByName(Frank Sinatra, ?id, ?b, ?e)#mb_getAlbumByArtistId(?id, ?beginDate, ?aid, ?albumName)";
+        
         Map.Entry<Expression, List<Expression>> query = Expression.getQuery(args[0]);
 
         if (!Expression.isQueryConsitent(query)) {
