@@ -5,12 +5,10 @@ import com.andersoncarlosfs.execution.parsers.WebServiceDescription;
 import com.andersoncarlosfs.execution.download.WebService;
 import java.util.AbstractMap;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 public class Main {
 
@@ -143,9 +141,8 @@ public class Main {
             if (query == null) {
                 return false;
             }
-            /*
-            Set<String> headConstants = new HashSet<>();
-            Set<String> headVariables = new HashSet<>();
+            List<String> headConstants = new LinkedList<>();
+            List<String> headVariables = new LinkedList<>();
             for (Element element : query.getKey().elements) {
                 if (element.isVariable()) {
                     headVariables.add(element.value);
@@ -153,23 +150,21 @@ public class Main {
                     headConstants.add(element.value);
                 }
             }
-             */
-            Set<String> bodyConstants = new HashSet<>();
-            /*
-            Set<String> bodyVariables = new HashSet<>();
-             */
+            List<String> bodyConstants = new LinkedList<>();
+            List<String> bodyVariables = new LinkedList<>();
             for (Expression expression : query.getValue()) {
                 for (Element element : expression.elements) {
                     if (element.isVariable()) {
-                        /*
                         bodyVariables.add(element.value);
-                         */
                     } else {
                         bodyConstants.add(element.value);
                     }
                 }
             }
-            return !query.getKey().elements.isEmpty() && !bodyConstants.isEmpty();
+            // Checking if the head is not empty
+            // Checking if the body contains a least one constant
+            // Checking if the body contains all variables in the head 
+            return !query.getKey().elements.isEmpty() && !bodyConstants.isEmpty() && bodyVariables.contains(headVariables);
         }
 
     }
@@ -472,7 +467,7 @@ public class Main {
 
         //args[0] = "P(?title, ?year)<-mb_getArtistInfoByName(Frank Sinatra, ?id, ?b, ?e)#mb_getAlbumByArtistId(?id, ?beginDate, ?aid, ?albumName)";
         args[0] = "P(?albumName, ?beginDate)<-mb_getArtistInfoByName(Frank Sinatra, ?id, ?b, ?e)#mb_getAlbumByArtistId(?id, ?beginDate, ?aid, ?albumName)";
-        
+
         Map.Entry<Expression, List<Expression>> query = Expression.getQuery(args[0]);
 
         if (!Expression.isQueryConsitent(query)) {
