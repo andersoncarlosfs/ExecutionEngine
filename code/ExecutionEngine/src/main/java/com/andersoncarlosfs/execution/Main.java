@@ -346,6 +346,59 @@ public class Main {
         /**
          *
          */
+        public Relation projection(Expression expression) {
+            //
+            if (!expression.function.toLowerCase().matches("p(rojection)?")) {
+                System.out.println("Query not well formed");
+
+                System.exit(0);
+            }
+
+            Map<String, Integer> newHeaders = new LinkedHashMap<>();
+
+            List<String> newAliases = new LinkedList<>();
+
+            for (Expression.Element element : expression.elements) {
+                if (element.isVariable()) {
+                    newHeaders.put(element.value, getIndexOfHeaderOrAlias(element.value));
+
+                    newAliases.add("");
+                }
+            }
+
+            if (newHeaders.isEmpty()) {
+                System.out.println("Empty projection is not allowed");
+
+                System.exit(0);
+            }
+
+            if (newHeaders.size() < expression.elements.size()) {
+                System.out.println("Constant projection is not allowed");
+
+                System.exit(0);
+            }
+
+            List<Row> newRows = new LinkedList<>();
+
+            for (Row currentRow : rows) {
+
+                Row newRow = new Row();
+
+                for (Integer index : newHeaders.values()) {
+
+                    newRow.values.add((String) ((LinkedList) currentRow.values).get(index));
+
+                }
+
+                newRows.add(newRow);
+            }
+
+            return new Relation(new LinkedList<String>(newHeaders.keySet()), newAliases, newRows);
+        }
+
+        /**
+         *
+         */
         public void print() {
             System.out.println("The tuple results are:");
             for (Row row : rows) {
