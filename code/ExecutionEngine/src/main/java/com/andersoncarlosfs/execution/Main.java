@@ -502,6 +502,7 @@ public class Main {
 
         Map.Entry<Expression, List<Expression>> query = Expression.getQuery(args[0]);
 
+        // Checking if the query is consistent
         /*        
         if (!Expression.isQueryConsitent(query)) {
             System.out.println("Query not well formed");
