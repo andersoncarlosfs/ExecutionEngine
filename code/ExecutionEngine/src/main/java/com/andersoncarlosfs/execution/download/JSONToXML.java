@@ -26,6 +26,8 @@ public class JSONToXML {
     public static final void storeContentInFile(String content, String filePath) throws Exception {
         try (FileWriter fOut = new FileWriter(filePath)) {
             fOut.write(content);
+            fOut.flush();
+            fOut.close();
         } catch (Exception exception) {
             System.out.println("Error in the storage");
 
