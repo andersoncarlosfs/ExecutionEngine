@@ -8,7 +8,7 @@
     -->
     <headVariables>
         <variable type="input" name="?artistId"/>
-        <variable type="output" name="?beginDate"/>
+        <variable type="output" name="?releaseDate"/>
         <variable type="output" name="?albumId"/>
         <variable type="output" name="?albumName"/>
     </headVariables>

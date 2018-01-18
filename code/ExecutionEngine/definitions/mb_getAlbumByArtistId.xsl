@@ -14,7 +14,7 @@
                         <xsl:text>NOT DEFINED</xsl:text>
                     </ITEM>
                     <xsl:text>&#10; &#32;</xsl:text>  
-                    <ITEM ANGIE-VAR='?beginDate' >
+                    <ITEM ANGIE-VAR='?releaseDate' >
                         <xsl:value-of select="mb:date"/>
                     </ITEM>
                     <xsl:text>&#10; &#32;</xsl:text> 
