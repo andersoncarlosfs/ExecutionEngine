@@ -127,7 +127,7 @@ public class Main {
             // Checking if the query is composed by two (2) parts
             if (parts.length != 2) {
                 //return null;
-                System.out.println("Query not well formed: The query does not contains a head and a body well defined");
+                System.out.println("Query not well formed: The query does not contain a head and a body well defined");
 
                 System.exit(0);
             }
@@ -137,12 +137,12 @@ public class Main {
             // Checking if the query contains a body
             //return head == null || body == null ? null : new AbstractMap.SimpleEntry(head, body);
             if (head == null) {
-                System.out.println("Query not well formed: The query does not contains a head");
+                System.out.println("Query not well formed: The query does not contain a head");
 
                 System.exit(0);
             }
             if (body == null) {
-                System.out.println("Query not well formed: The query does not contains a body");
+                System.out.println("Query not well formed: The query does not contain a body");
 
                 System.exit(0);
             }
@@ -180,10 +180,19 @@ public class Main {
                 }
 
                 if (ws.headVariables.size() != expression.elements.size()) {
-                    System.out.println("Query not well formed: The function \"" + expression.function + "\" was defined with " + ws.headVariables.size() + " arguments and " + expression.elements.size() + " was found");
+                    System.out.println("Query not well formed: The function \"" + expression.function + "\" was defined with " + ws.headVariables.size() + " arguments and " + expression.elements.size() + " arguments was found");
 
                     System.exit(0);
                 }
+
+                int inputs = 0;
+
+                for (int i = 0; i < ws.numberOfInputs; i++) {
+                    inputs += bodyVariables.contains(expression.elements.get(i).value) ? 1 : 0;
+                }
+
+                inputs = bodyConstants.size();
+                
 
                 for (Element element : expression.elements) {
                     if (element.isVariable()) {
@@ -193,13 +202,21 @@ public class Main {
                     }
                 }
 
+                inputs = bodyConstants.size() - inputs;
+
+                if (ws.numberOfInputs != inputs) {
+                    System.out.println("Query not well formed: The function \"" + expression.function + "\" was defined with " + ws.numberOfInputs + " inputs and " + inputs + " inputs was found");
+
+                    System.exit(0);
+                }
+
             }
             // Checking if the head is not empty
             // Checking if the body contains a least one constant
             // Checking if the body contains all variables in the head 
             //return !query.getKey().elements.isEmpty() && !bodyConstants.isEmpty() && bodyVariables.contains(headVariables);
             if (query.getKey().elements.isEmpty()) {
-                System.out.println("Query not well formed: The function \"" + query.getKey().function + "\" doest not have body");
+                System.out.println("Query not well formed: The function \"" + query.getKey().function + "\" does not have body");
 
                 System.exit(0);
             }
@@ -209,7 +226,7 @@ public class Main {
                 System.exit(0);
             }
             if (!bodyVariables.contains(headVariables)) {
-                System.out.println("Query not well formed: The head of the query cotains variables that does not appear on the body of the query");
+                System.out.println("Query not well formed: The head of the query contains only variables that does not appear on the body of the query");
 
                 System.exit(0);
             }
@@ -234,19 +251,16 @@ public class Main {
 
         }
 
-        private List<String> headers;
-        private List<String> aliases;
+        private List<String> header;
         private List<Row> rows;
 
-        public Relation() {
-            this.headers = new LinkedList<>();
-            this.aliases = new LinkedList<>();
+        private Relation() {
+            this.header = new LinkedList<>();
             this.rows = new LinkedList<>();
         }
 
-        public Relation(List<String> headers, List<String> aliases, List<Row> rows) {
-            this.headers = headers;
-            this.aliases = aliases;
+        private Relation(List<String> header, List<Row> rows) {
+            this.header = header;
             this.rows = rows;
         }
 
@@ -258,28 +272,18 @@ public class Main {
             /*
             if (!element.isVariable()) {
                 return -1;
-            }
-            String variable = element.value;
+            }            
              */
-            // Checking if the aliases contain the variable            
+            // Checking if the header contain the variable            
             int index = 0;
-            for (String value : aliases) {
-                if (value.equals(variable)) {
-                    return index;
-                }
-                index++;
-            }
-            // Checking if the headers contain the variable    
-            index = 0;
-            for (String value : headers) {
+            for (String value : header) {
                 if (value.equals(variable)) {
                     return index;
                 }
                 index++;
             }
 
-            // Variable was not found
-            System.out.println("Query not well formed: The variable \"" + variable + "\" was not found!");
+            System.out.println("\"" + variable + "\" was not found");
 
             System.exit(0);
 
@@ -293,12 +297,6 @@ public class Main {
             WebService ws = WebServiceDescription.loadDescription(expression.function);
 
             System.out.println(expression.function);
-
-            if (ws.headVariables.size() != expression.elements.size()) {
-                System.out.println("Query not well formed");
-
-                System.exit(0);
-            }
 
             Map<String, Integer> parameters = new LinkedHashMap<>();
 
@@ -363,51 +361,23 @@ public class Main {
 
             }
 
-            for (int i = 0; i < ws.headVariables.size(); i++) {
-
-                String header = ws.headVariables.get(i);
-
-                if (!headers.contains(header)) {
-
-                    Expression.Element element = (Expression.Element) ((LinkedList) expression.elements).get(i);
-
-                    if (element.isVariable()) {
-                        aliases.add(element.value);
-                    } else {
-                        aliases.add("");
-                    }
-
-                    headers.add(header);
-
+            for (Expression.Element element : expression.elements) {
+                if (!header.contains(element.value)) {
+                    header.add(element.value);
                 }
-
             }
 
             rows = newRows;
-
         }
 
         /**
          *
          */
         public Relation projection(Expression expression) {
-            //
-            if (!expression.function.toLowerCase().matches("(p(rojection)?)|(v(iew)?)")) {
-                System.out.println("Query not well formed");
-
-                System.exit(0);
-            }
-
             Map<String, Integer> newHeaders = new LinkedHashMap<>();
 
-            List<String> newAliases = new LinkedList<>();
-
             for (Expression.Element element : expression.elements) {
-                if (element.isVariable()) {
-                    newHeaders.put(element.value, getIndexOfHeaderOrAlias(element.value));
-
-                    newAliases.add("");
-                }
+                newHeaders.put(element.value, getIndexOfHeaderOrAlias(element.value));
             }
 
             if (newHeaders.isEmpty()) {
@@ -432,7 +402,7 @@ public class Main {
                 newRows.add(newRow);
             }
 
-            return new Relation(new LinkedList<String>(newHeaders.keySet()), newAliases, newRows);
+            return new Relation(new LinkedList<String>(newHeaders.keySet()), newRows);
         }
 
         /**
@@ -442,10 +412,10 @@ public class Main {
             System.out.println("The tuple results are:");
 
             System.out.print("(");
-            for (int i = 0; i < headers.size() - 1; i++) {
-                System.out.print(((LinkedList) headers).get(i) + "; ");
+            for (int i = 0; i < header.size() - 1; i++) {
+                System.out.print(((LinkedList) header).get(i) + "; ");
             }
-            System.out.print(((LinkedList) headers).get(headers.size() - 1));
+            System.out.print(((LinkedList) header).get(header.size() - 1));
             System.out.print(")");
             System.out.println();
 
@@ -485,19 +455,19 @@ public class Main {
                 rows.add(row);
             }
 
-            List<String> aliases = new LinkedList<>();
+            List<String> headers = new LinkedList<>();
+
+            int inputs = 0;
 
             for (Expression.Element element : expression.elements) {
                 if (element.isVariable()) {
-                    aliases.add(element.value);
+                    headers.add(element.value);
                 } else {
-                    aliases.add("");
+                    headers.add("_" + inputs++);
                 }
             }
 
-            List<String> headers = new LinkedList<>(ws.headVariables);
-
-            return new Relation(headers, aliases, rows);
+            return new Relation(headers, rows);
         }
 
     }
@@ -509,7 +479,7 @@ public class Main {
         args = new String[1];
 
         //args[0] = "P(?title, ?year)<-mb_getArtistInfoByName(Frank Sinatra, ?id, ?b, ?e)#mb_getAlbumByArtistId(?id, ?beginDate, ?aid, ?albumName)";
-        args[0] = "P(?albumName, ?beginDate)<-mb_getArtistInfoByName(Frank Sinatra, ?id, ?b, ?e)#mb_getAlbumByArtistId(?id, ?beginDate, ?aid, ?albumName)";
+        args[0] = "P(?albumName, ?beginDate)<-mb_getArtistInfoByName(Frank Sinatra, ?id, ?b, ?e)#mb_getAlbumByArtistId(?id, ?r, ?aid, ?n)";
 
         Map.Entry<Expression, List<Expression>> query = Expression.getQuery(args[0]);
 
