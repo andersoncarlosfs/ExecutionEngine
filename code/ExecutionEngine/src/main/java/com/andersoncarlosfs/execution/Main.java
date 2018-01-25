@@ -227,7 +227,7 @@ public class Main {
 
                 System.exit(0);
             }
-            if (!bodyVariables.contains(headVariables)) {
+            if (!bodyVariables.containsAll(headVariables)) {
                 System.out.println("Query not well formed: The head of the query contains only variables that does not appear on the body of the query");
 
                 System.exit(0);
@@ -481,7 +481,8 @@ public class Main {
         args = new String[1];
 
         //args[0] = "P(?title, ?year)<-mb_getArtistInfoByName(Frank Sinatra, ?id, ?b, ?e)#mb_getAlbumByArtistId(?id, ?beginDate, ?aid, ?albumName)";
-        args[0] = "P(?albumName, ?beginDate)<-mb_getArtistInfoByName(Frank Sinatra, ?id, ?b, ?e)#mb_getAlbumByArtistId(?id, ?r, ?aid, ?n)";
+        //args[0] = "P(?albumName, ?beginDate)<-mb_getArtistInfoByName(Frank Sinatra, ?id, ?b, ?e)#mb_getAlbumByArtistId(?id, ?r, ?aid, ?n)";
+        args[0] = "P(?n, ?b)<-mb_getArtistInfoByName(Frank Sinatra, ?id, ?b, ?e)#mb_getAlbumByArtistId(?id, ?r, ?aid, ?n)";
 
         Map.Entry<Expression, List<Expression>> query = Expression.getQuery(args[0]);
 
