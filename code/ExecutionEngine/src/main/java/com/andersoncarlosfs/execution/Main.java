@@ -5,10 +5,12 @@ import com.andersoncarlosfs.execution.parsers.WebServiceDescription;
 import com.andersoncarlosfs.execution.download.WebService;
 import java.util.AbstractMap;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class Main {
 
@@ -185,13 +187,18 @@ public class Main {
                     System.exit(0);
                 }
 
+                Set<String> variables = new HashSet<>();
                 for (Element element : expression.elements) {
-                    if (element.isVariable()) {
-                        bodyVariables.add(element.value);
+                    if (element.isVariable() && !variables.add(element.value)) {
+                        System.out.println("Query not well formed: The function \"" + expression.function + "\" contains duplicate variables");
+
+                        System.exit(0);
                     } else {
                         bodyConstants.add(element.value);
                     }
                 }
+
+                bodyVariables.addAll(variables);
 
                 List<Element> inputs = new LinkedList<>();
                 for (int i = 0; i < ws.numberOfInputs; i++) {
@@ -325,8 +332,7 @@ public class Main {
 
                 System.exit(0);
             }
-            */
-            
+             */
             List<Row> newRows = new LinkedList<>();
 
             for (Row currentRow : rows) {
@@ -397,7 +403,6 @@ public class Main {
                 System.exit(0);
             }
              */
-            
             List<Row> newRows = new LinkedList<>();
 
             for (Row currentRow : rows) {
@@ -487,6 +492,7 @@ public class Main {
         //args[0] = "P(?title, ?year)<-mb_getArtistInfoByName(Frank Sinatra, ?id, ?b, ?e)#mb_getAlbumByArtistId(?id, ?beginDate, ?aid, ?albumName)";
         //args[0] = "P(?albumName, ?beginDate)<-mb_getArtistInfoByName(Frank Sinatra, ?id, ?b, ?e)#mb_getAlbumByArtistId(?id, ?r, ?aid, ?n)";
         //args[0] = "P(?n, ?b)<-mb_getArtistInfoByName(Frank Sinatra, ?id, ?b, ?e)#mb_getAlbumByArtistId(?id, ?r, ?aid, ?n)";
+        //args[0] = "P(?n, ?b)<-mb_getArtistInfoByName(Frank Sinatra, ?b, ?b, ?e)#mb_getAlbumByArtistId(?id, ?r, ?aid, ?n)";
         args[0] = "P(?n, ?b)<-mb_getArtistInfoByName(Frank Sinatra, ?id, ?b, ?e)#mb_getAlbumByArtistId(?id, ?r, ?aid, ?n)";
 
         Map.Entry<Expression, List<Expression>> query = Expression.getQuery(args[0]);
