@@ -185,15 +185,6 @@ public class Main {
                     System.exit(0);
                 }
 
-                int inputs = 0;
-
-                for (int i = 0; i < ws.numberOfInputs; i++) {
-                    inputs += bodyVariables.contains(expression.elements.get(i).value) ? 1 : 0;
-                }
-
-                inputs = bodyConstants.size();
-                
-
                 for (Element element : expression.elements) {
                     if (element.isVariable()) {
                         bodyVariables.add(element.value);
@@ -202,9 +193,20 @@ public class Main {
                     }
                 }
 
-                inputs = bodyConstants.size() - inputs;
-
-                if (ws.numberOfInputs != inputs) {
+                List<Element> inputs = new LinkedList<>();
+                for (int i = 0; i < ws.numberOfInputs; i++) {
+                    Element element = expression.elements.get(i);
+                    if (element.isVariable()) {
+                        for (Expression e : query.getValue()) {
+                            if (e.elements.contains(element) && inputs.add(element)) {
+                                break;
+                            }
+                        }
+                    } else {
+                        inputs.add(element);
+                    }
+                }
+                if (ws.numberOfInputs != inputs.size()) {
                     System.out.println("Query not well formed: The function \"" + expression.function + "\" was defined with " + ws.numberOfInputs + " inputs and " + inputs + " inputs was found");
 
                     System.exit(0);
