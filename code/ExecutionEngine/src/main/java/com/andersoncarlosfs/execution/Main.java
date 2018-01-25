@@ -319,12 +319,14 @@ public class Main {
 
             }
 
+            /*
             if (escape.isEmpty()) {
                 System.out.println("Cartesian Product is not allowed");
 
                 System.exit(0);
             }
-
+            */
+            
             List<Row> newRows = new LinkedList<>();
 
             for (Row currentRow : rows) {
@@ -382,6 +384,7 @@ public class Main {
                 newHeaders.put(element.value, getIndexOfHeaderOrAlias(element.value));
             }
 
+            /*
             if (newHeaders.isEmpty()) {
                 System.out.println("Empty projection is not allowed");
 
@@ -393,7 +396,8 @@ public class Main {
 
                 System.exit(0);
             }
-
+             */
+            
             List<Row> newRows = new LinkedList<>();
 
             for (Row currentRow : rows) {
@@ -482,6 +486,7 @@ public class Main {
 
         //args[0] = "P(?title, ?year)<-mb_getArtistInfoByName(Frank Sinatra, ?id, ?b, ?e)#mb_getAlbumByArtistId(?id, ?beginDate, ?aid, ?albumName)";
         //args[0] = "P(?albumName, ?beginDate)<-mb_getArtistInfoByName(Frank Sinatra, ?id, ?b, ?e)#mb_getAlbumByArtistId(?id, ?r, ?aid, ?n)";
+        //args[0] = "P(?n, ?b)<-mb_getArtistInfoByName(Frank Sinatra, ?id, ?b, ?e)#mb_getAlbumByArtistId(?id, ?r, ?aid, ?n)";
         args[0] = "P(?n, ?b)<-mb_getArtistInfoByName(Frank Sinatra, ?id, ?b, ?e)#mb_getAlbumByArtistId(?id, ?r, ?aid, ?n)";
 
         Map.Entry<Expression, List<Expression>> query = Expression.getQuery(args[0]);
