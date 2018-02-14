@@ -371,9 +371,13 @@ public class Main {
                 for (String[] tuple : ParseResultsForWS.showResults(fileWithTransfResults, ws)) {
                     Row newRow = new Row(currentRow);
                     for (int i = 0; currentRow != null && i < tuple.length; i++) {
-                        if (filters.getOrDefault(i, -1) > 0 && !((LinkedList) currentRow.values).get(filters.get(i)).equals(tuple[i])) {                            
-                            System.out.println(((LinkedList) currentRow.values).get(filters.get(i)) + " != " + tuple[i]);
-                            currentRow = null;                            
+                        if (filters.getOrDefault(i, -1) > 0) {                            
+                            System.out.println(((LinkedList) currentRow.values).get(filters.get(i)) + " ? " + tuple[i]);
+                            if (((LinkedList) currentRow.values).get(filters.get(i)).equals(tuple[i])) {
+                                continue;
+                            } else {
+                                currentRow = null;                            
+                            }
                         }
                         if (!escape.contains(i)) {
                             newRow.values.add(tuple[i]);
