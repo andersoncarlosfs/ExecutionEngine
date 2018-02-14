@@ -471,11 +471,7 @@ public class Main {
             int inputs = 0;
 
             for (Expression.Element element : expression.elements) {
-                if (element.isVariable()) {
-                    headers.add(element.value);
-                } else {
-                    headers.add("_" + inputs++);
-                }
+                headers.add(element.value);
             }
 
             return new Relation(headers, rows);
@@ -493,7 +489,9 @@ public class Main {
         //args[0] = "P(?albumName, ?beginDate)<-mb_getArtistInfoByName(Frank Sinatra, ?id, ?b, ?e)#mb_getAlbumByArtistId(?id, ?r, ?aid, ?n)";
         //args[0] = "P(?n, ?b)<-mb_getArtistInfoByName(Frank Sinatra, ?id, ?b, ?e)#mb_getAlbumByArtistId(?id, ?r, ?aid, ?n)";
         //args[0] = "P(?n, ?b)<-mb_getArtistInfoByName(Frank Sinatra, ?b, ?b, ?e)#mb_getAlbumByArtistId(?id, ?r, ?aid, ?n)";
-        args[0] = "P(?n, ?b)<-mb_getArtistInfoByName(Frank Sinatra, ?id, ?b, ?e)#mb_getAlbumByArtistId(?id, ?r, ?aid, ?n)";
+        //args[0] = "P(?n, ?b)<-mb_getArtistInfoByName(Frank Sinatra, ?id, ?b, ?e)#mb_getAlbumByArtistId(?id, ?r, ?aid, ?n)";
+        //args[0] = "P(Frank Sinatra, ?id, ?n, ?b)<-mb_getArtistInfoByName(Frank Sinatra, ?id, ?b, ?e)#mb_getAlbumByArtistId(?id, ?r, ?aid, ?n)";
+        args[0] = "X(?id, ?n, ?b)<-mb_getArtistInfoByName(Frank Sinatra, ?id, ?b, ?e)#mb_getAlbumByArtistId(?id, ?r, ?aid, ?n)";
 
         Map.Entry<Expression, List<Expression>> query = Expression.getQuery(args[0]);
 
