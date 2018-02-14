@@ -370,7 +370,7 @@ public class Main {
 
                 for (String[] tuple : ParseResultsForWS.showResults(fileWithTransfResults, ws)) {
                     Row newRow = new Row(currentRow);
-                    for (int i = 0; currentRow != null && i < tuple.length; i++) {
+                    for (int i = 0; newRow != null && i < tuple.length; i++) {
                         if (filters.getOrDefault(i, -1) > 0) {                            
                             System.out.println(((LinkedList) currentRow.values).get(filters.get(i)) + " ? " + tuple[i]);
                             if (((LinkedList) currentRow.values).get(filters.get(i)).equals(tuple[i])) {
@@ -383,7 +383,7 @@ public class Main {
                             newRow.values.add(tuple[i]);
                         }                        
                     }
-                    if (currentRow != null) {
+                    if (newRow != null) {
                         newRows.add(newRow);
                     }                    
                 }
@@ -511,7 +511,7 @@ public class Main {
         //args[0] = "P(?n, ?b)<-mb_getArtistInfoByName(Frank Sinatra, ?id, ?b, ?e)#mb_getAlbumByArtistId(?id, ?r, ?aid, ?n)";
         //args[0] = "P(Frank Sinatra, ?id, ?n, ?b)<-mb_getArtistInfoByName(Frank Sinatra, ?id, ?b, ?e)#mb_getAlbumByArtistId(?id, ?r, ?aid, ?n)";
         //args[0] = "X(?id, ?n, ?b, ?r)<-mb_getArtistInfoByName(Frank Sinatra, ?id, ?b, ?e)#mb_getAlbumByArtistId(?id, ?r, ?aid, ?n)";
-        args[0] = "X(?id, ?n, ?b, ?r)<-mb_getArtistInfoByName(Frank Sinatra, ?id, ?b, ?e)#mb_getAlbumByArtistId(?id, ?b, ?aid, ?n)";
+        args[0] = "X(?id, ?n, ?b)<-mb_getArtistInfoByName(Frank Sinatra, ?id, ?b, ?e)#mb_getAlbumByArtistId(?id, ?b, ?aid, ?n)";
 
         Map.Entry<Expression, List<Expression>> query = Expression.getQuery(args[0]);
 
