@@ -291,11 +291,11 @@ public class Main {
                 }
                 index++;
             }
-
+            /*
             System.out.println("\"" + variable + "\" was not found");
 
             System.exit(0);
-
+            */
             return -1;
         }
 
@@ -317,7 +317,7 @@ public class Main {
                 int index = -1;
 
                 if (element.isVariable()) {
-                    index = getIndexOfHeaderOrAlias(element.value);
+                    index = getIndexOfHeaderOrAlias(element.value);                    
 
                     escape.add(i);
                 }
@@ -333,6 +333,17 @@ public class Main {
                 System.exit(0);
             }
              */
+            
+            Map<String, Integer> filters = new LinkedHashMap<>();
+            
+            for (int i = ws.numberOfInputs; i < ws.headVariables.size(); i++) {
+                Expression.Element element = (Expression.Element) ((LinkedList) expression.elements).get(i);
+
+                if (!element.isVariable() || getIndexOfHeaderOrAlias(element.value) >= 0) {
+                    parameters.put(element.value, i);   
+                }                             
+            }
+
             List<Row> newRows = new LinkedList<>();
 
             for (Row currentRow : rows) {
