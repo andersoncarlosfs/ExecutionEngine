@@ -334,14 +334,12 @@ public class Main {
             }
              */
             
-            Map<String, Integer> filters = new LinkedHashMap<>();
+            Map<Integer, Integer> filters = new LinkedHashMap<>();
             
             for (int i = ws.numberOfInputs; i < ws.headVariables.size(); i++) {
                 Expression.Element element = (Expression.Element) ((LinkedList) expression.elements).get(i);
-
-                if (!element.isVariable() || getIndexOfHeaderOrAlias(element.value) >= 0) {
-                    parameters.put(element.value, i);   
-                }                             
+               
+                filters.put(i, getIndexOfHeaderOrAlias(element.value));                                            
             }
 
             List<Row> newRows = new LinkedList<>();
@@ -372,12 +370,18 @@ public class Main {
 
                 for (String[] tuple : ParseResultsForWS.showResults(fileWithTransfResults, ws)) {
                     Row newRow = new Row(currentRow);
-                    for (int i = 0; i < tuple.length; i++) {
+                    for (int i = 0; currentRow != null && i < tuple.length; i++) {
+                        if (filters.getOrDefault(i, -1) > 0 && !((LinkedList) currentRow.values).get(filters.get(i)).equals(tuple[i])) {                            
+                            System.out.println(((LinkedList) currentRow.values).get(filters.get(i)) + " != " + tuple[i]);
+                            currentRow = null;                            
+                        }
                         if (!escape.contains(i)) {
                             newRow.values.add(tuple[i]);
-                        }
+                        }                        
                     }
-                    newRows.add(newRow);
+                    if (currentRow != null) {
+                        newRows.add(newRow);
+                    }                    
                 }
 
             }
