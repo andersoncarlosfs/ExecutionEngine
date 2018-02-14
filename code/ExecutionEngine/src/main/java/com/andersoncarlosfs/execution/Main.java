@@ -372,7 +372,6 @@ public class Main {
                     Row newRow = new Row(currentRow);
                     for (int i = 0; newRow != null && i < tuple.length; i++) {
                         if (filters.getOrDefault(i, -1) > 0) {                            
-                            System.out.println(((LinkedList) currentRow.values).get(filters.get(i)) + " ? " + tuple[i]);
                             if (!((LinkedList) currentRow.values).get(filters.get(i)).equals(tuple[i])) {                            
                                 newRow = null;                            
                             }
