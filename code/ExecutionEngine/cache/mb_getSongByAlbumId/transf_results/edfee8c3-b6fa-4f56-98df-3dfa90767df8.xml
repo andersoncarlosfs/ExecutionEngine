@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?><RESULT xmlns:mb="http://musicbrainz.org/ns/mmd-2.0#">
+<RECORD>
+  <ITEM ANGIE-VAR="?albumId">NOT DEFINED</ITEM>
+  <ITEM ANGIE-VAR="?duration"/>
+  <ITEM ANGIE-VAR="?songId">8bbf0cc2-b2ef-4926-8c43-cac07d1948c0</ITEM>
+  <ITEM ANGIE-VAR="?songName">Sugar Town</ITEM>
+</RECORD>
+<RECORD>
+  <ITEM ANGIE-VAR="?albumId">NOT DEFINED</ITEM>
+  <ITEM ANGIE-VAR="?duration"/>
+  <ITEM ANGIE-VAR="?songId">bae7a481-92b4-472b-8217-b5e5d4731594</ITEM>
+  <ITEM ANGIE-VAR="?songName">Summer Wine (feat. Lee Hazlewood)</ITEM>
+</RECORD></RESULT>
