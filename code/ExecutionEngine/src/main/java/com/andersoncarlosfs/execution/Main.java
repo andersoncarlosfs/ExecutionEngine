@@ -534,7 +534,7 @@ public class Main {
                 relation.join(expression);
             }
 
-            relation.print();
+            //relation.print();
 
         }
 
