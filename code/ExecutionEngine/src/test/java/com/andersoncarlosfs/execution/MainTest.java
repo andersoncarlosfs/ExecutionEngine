@@ -21,11 +21,12 @@ public class MainTest {
      */
     @Test
     public void testMain() throws Exception {
+        String args[] = {"P(?id, Frank Sinatra, ?aid, ?n, ?sid, ?t)<-mb_getArtistInfoByName(Frank Sinatra, ?id, ?b, ?e)#mb_getAlbumByArtistId(?id, ?r, ?aid, ?n)#mb_getSongByAlbumId(?aid, ?d, ?sid, ?t)"};
         Runtime runtime = Runtime.getRuntime();
         runtime.gc();
         long total = runtime.totalMemory();
         long start = System.nanoTime();
-        Main.main(null);
+        Main.main(args);
         long stop = System.nanoTime();
         long free = runtime.freeMemory();
         System.out.println("Time (MS): " + (stop - start) / 1000000.0);

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?><RESULT xmlns:mb="http://musicbrainz.org/ns/mmd-2.0#">
+<RECORD>
+  <ITEM ANGIE-VAR="?albumId">NOT DEFINED</ITEM>
+  <ITEM ANGIE-VAR="?duration">199826</ITEM>
+  <ITEM ANGIE-VAR="?songId">1c22e07f-cb53-4475-bc2d-d36c8031a9c6</ITEM>
+  <ITEM ANGIE-VAR="?songName">From the Bottom of My Heart</ITEM>
+</RECORD>
+<RECORD>
+  <ITEM ANGIE-VAR="?albumId">NOT DEFINED</ITEM>
+  <ITEM ANGIE-VAR="?duration">186466</ITEM>
+  <ITEM ANGIE-VAR="?songId">8bc96a1f-ed3e-4012-9bb4-0f831ecd4b29</ITEM>
+  <ITEM ANGIE-VAR="?songName">Melancholy Mood</ITEM>
+</RECORD></RESULT>

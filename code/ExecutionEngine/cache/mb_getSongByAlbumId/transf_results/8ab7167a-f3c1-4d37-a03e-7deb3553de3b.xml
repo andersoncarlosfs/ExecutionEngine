@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?><RESULT xmlns:mb="http://musicbrainz.org/ns/mmd-2.0#">
+<RECORD>
+  <ITEM ANGIE-VAR="?albumId">NOT DEFINED</ITEM>
+  <ITEM ANGIE-VAR="?duration"/>
+  <ITEM ANGIE-VAR="?songId">94ac870b-3bc8-4d1e-a0b9-34141e1aeb1d</ITEM>
+  <ITEM ANGIE-VAR="?songName">There's No You</ITEM>
+</RECORD>
+<RECORD>
+  <ITEM ANGIE-VAR="?albumId">NOT DEFINED</ITEM>
+  <ITEM ANGIE-VAR="?duration"/>
+  <ITEM ANGIE-VAR="?songId">9dc22666-e1de-411d-9aa0-95e33ff4d28b</ITEM>
+  <ITEM ANGIE-VAR="?songName">Dream</ITEM>
+</RECORD></RESULT>
