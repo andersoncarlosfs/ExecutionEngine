@@ -509,7 +509,8 @@ public class Main {
         //args[0] = "P(?n, ?b)<-mb_getArtistInfoByName(Frank Sinatra, ?id, ?b, ?e)#mb_getAlbumByArtistId(?id, ?r, ?aid, ?n)";
         //args[0] = "P(Frank Sinatra, ?id, ?n, ?b)<-mb_getArtistInfoByName(Frank Sinatra, ?id, ?b, ?e)#mb_getAlbumByArtistId(?id, ?r, ?aid, ?n)";
         //args[0] = "X(?id, ?n, ?b, ?r)<-mb_getArtistInfoByName(Frank Sinatra, ?id, ?b, ?e)#mb_getAlbumByArtistId(?id, ?r, ?aid, ?n)";
-        args[0] = "X(?id, ?n, ?b)<-mb_getArtistInfoByName(Frank Sinatra, ?id, ?b, ?e)#mb_getAlbumByArtistId(?id, ?b, ?aid, ?n)";
+        //args[0] = "X(?id, ?n, ?b)<-mb_getArtistInfoByName(Frank Sinatra, ?id, ?b, ?e)#mb_getAlbumByArtistId(?id, ?b, ?aid, ?n)";
+	args[0] = "P(?id, Frank Sinatra, ?aid, ?n, ?sid, ?t)<-mb_getArtistInfoByName(Frank Sinatra, ?id, ?b, ?e)#mb_getAlbumByArtistId(?id, ?r, ?aid, ?n)#mb_getSongByAlbumId(?aid, ?d, ?sid, ?t)";
 
         Map.Entry<Expression, List<Expression>> query = Expression.getQuery(args[0]);
 
