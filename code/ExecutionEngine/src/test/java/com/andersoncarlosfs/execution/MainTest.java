@@ -21,7 +21,8 @@ public class MainTest {
      */
     @Test
     public void testMain() throws Exception {
-        String args[] = {"P(?id, Frank Sinatra, ?aid, ?n, ?sid, ?t)<-mb_getArtistInfoByName(Frank Sinatra, ?id, ?b, ?e)#mb_getAlbumByArtistId(?id, ?r, ?aid, ?n)#mb_getSongByAlbumId(?aid, ?d, ?sid, ?t)"};
+        //String args[] = {"P(?id, Frank Sinatra, ?aid, ?n, ?sid, ?t)<-mb_getArtistInfoByName(Frank Sinatra, ?id, ?b, ?e)#mb_getAlbumByArtistId(?id, ?r, ?aid, ?n)#mb_getSongByAlbumId(?aid, ?d, ?sid, ?t)"};
+        String args[] = {"P(?id, Frank Sinatra, ?aid, ?an, ?lid, ?ln)<-mb_getArtistInfoByName(Frank Sinatra, ?id, ?ab, ?ae)#mb_getAlbumByArtistId(?id, ?ar, ?aid, ?an)#mb_getLabelByAlbumId(?aid, ?lid, ?ln, ?lb)"};
         Runtime runtime = Runtime.getRuntime();
         runtime.gc();
         long total = runtime.totalMemory();

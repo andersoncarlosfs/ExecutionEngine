@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?><RESULT xmlns:mb="http://musicbrainz.org/ns/mmd-2.0#">
+<RECORD>
+  <ITEM ANGIE-VAR="?albumId">NOT DEFINED</ITEM>
+  <ITEM ANGIE-VAR="?labelId">7b9fd398-c0c2-4167-9c05-6d012aacd5ef</ITEM>
+  <ITEM ANGIE-VAR="?labelName">Artanis Entertainment Group</ITEM>
+  <ITEM ANGIE-VAR="?beginDate"/>
+</RECORD>
+<RECORD>
+  <ITEM ANGIE-VAR="?albumId">NOT DEFINED</ITEM>
+  <ITEM ANGIE-VAR="?labelId">b1fe170d-0ac1-4d7a-b7e3-318c2426d5c4</ITEM>
+  <ITEM ANGIE-VAR="?labelName">DCC Compact Classics</ITEM>
+  <ITEM ANGIE-VAR="?beginDate"/>
+</RECORD></RESULT>
