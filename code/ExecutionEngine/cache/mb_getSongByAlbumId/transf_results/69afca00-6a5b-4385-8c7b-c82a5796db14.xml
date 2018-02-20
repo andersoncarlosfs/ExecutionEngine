@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?><RESULT xmlns:mb="http://musicbrainz.org/ns/mmd-2.0#">
+<RECORD>
+  <ITEM ANGIE-VAR="?albumId">NOT DEFINED</ITEM>
+  <ITEM ANGIE-VAR="?duration"/>
+  <ITEM ANGIE-VAR="?songId">4733bfb8-2845-49e7-8346-6f0756b46af8</ITEM>
+  <ITEM ANGIE-VAR="?songName">Think of Me</ITEM>
+</RECORD>
+<RECORD>
+  <ITEM ANGIE-VAR="?albumId">NOT DEFINED</ITEM>
+  <ITEM ANGIE-VAR="?duration"/>
+  <ITEM ANGIE-VAR="?songId">7c8535d8-2ed9-4bed-85eb-ef8dee096088</ITEM>
+  <ITEM ANGIE-VAR="?songName">Pensa a Me</ITEM>
+</RECORD>
+<RECORD>
+  <ITEM ANGIE-VAR="?albumId">NOT DEFINED</ITEM>
+  <ITEM ANGIE-VAR="?duration"/>
+  <ITEM ANGIE-VAR="?songId">ae9e9e7a-41e6-47be-8b65-6fa2b09dd315</ITEM>
+  <ITEM ANGIE-VAR="?songName">June, July and August</ITEM>
+</RECORD></RESULT>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?><RESULT xmlns:mb="http://musicbrainz.org/ns/mmd-2.0#">
+<RECORD>
+  <ITEM ANGIE-VAR="?albumId">NOT DEFINED</ITEM>
+  <ITEM ANGIE-VAR="?duration"/>
+  <ITEM ANGIE-VAR="?songId">0825794c-4f80-4b7a-b475-f154101f5961</ITEM>
+  <ITEM ANGIE-VAR="?songName">The Cradle Song</ITEM>
+</RECORD>
+<RECORD>
+  <ITEM ANGIE-VAR="?albumId">NOT DEFINED</ITEM>
+  <ITEM ANGIE-VAR="?duration"/>
+  <ITEM ANGIE-VAR="?songId">fb792771-d9fa-4c9f-9e7f-d09c444975f9</ITEM>
+  <ITEM ANGIE-VAR="?songName">Nancy (With the Laughing Face)</ITEM>
+</RECORD></RESULT>
