@@ -20,6 +20,7 @@ import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 import com.andersoncarlosfs.execution.constants.Formating;
 import com.andersoncarlosfs.execution.constants.Settings;
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
 public class WebService {
@@ -218,7 +219,7 @@ public class WebService {
             conn.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows; U; Windows NT 6.1; en-GB;     rv:1.9.2.13) Gecko/20101203 Firefox/3.6.13 (.NET CLR 3.5.30729)");
             //conn.setRequestProperty("Accept-Charset", "UTF-8");
 
-            reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            reader = new BufferedReader(new InputStreamReader(conn.getInputStream(), StandardCharsets.UTF_8));
 
             /**
              * Removing empty lines
